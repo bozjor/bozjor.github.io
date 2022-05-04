@@ -828,9 +828,14 @@
           <a aria-label="Email Salah" href="mailto:salah.abdinoor95@gmail.com" target="_blank" data-position="top"
             data-tooltip="Email Salah" class="btn-floating btn-large waves-effect waves-light blue-grey tooltipped"><i
               class="fa fa-envelope"></i><a aria-label="Email Salah" href="mailto:salah.abdinoor95@gmail.com"
-              class="hoverline">salah.abdinoor95@gmail.com</a></a>
+              class="hoverline"><a href="" class="copy-click"
+              data-tooltip-text="Click To Copy" 
+              data-tooltip-text-copied="✔ Copied">
+              salah.abdinoor95@gmail.com</a>
+                   <p></a></a>
         </p>
-        <p>
+ 
+
           <a aria-label="View Salah on GitHub" href="http://github.com/salahabdinoor" target="_blank"
             data-position="top" data-tooltip="View Salah on GitHub"
             class="btn-floating btn-large waves-effect waves-light blue-grey tooltipped"><i class="fa fa-github"></i><a
@@ -876,6 +881,45 @@
         closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
       })
     })
+  </script>
+
+<!-- Copy to clipboard -->
+  <script>
+const links = document.querySelectorAll('.copy-click');
+const cls = {
+  copied: 'is-copied',
+  hover: 'is-hovered' };
+
+const copyToClipboard = str => {
+  const el = document.createElement('input');
+  str.dataset.copyString ? el.value = str.dataset.copyString : el.value = str.text;
+  el.setAttribute('readonly', '');
+  el.style.position = 'absolute';
+  el.style.opacity = 0;
+  document.body.appendChild(el);
+  el.select();
+  document.execCommand('copy');
+  document.body.removeChild(el);
+};
+const clickInteraction = e => {
+  e.preventDefault();
+  copyToClipboard(e.target);
+  e.target.classList.add(cls.copied);
+  setTimeout(() => e.target.classList.remove(cls.copied), 1000);
+  setTimeout(() => e.target.classList.remove(cls.hover), 700);
+};
+Array.from(links).forEach(link => {
+  link.addEventListener('click', e => clickInteraction(e));
+  link.addEventListener('keypress', e => {
+    if (e.keyCode === 13) clickInteraction(e);
+  });
+  link.addEventListener('mouseover', e => e.target.classList.add(cls.hover));
+  link.addEventListener('mouseleave', e => {
+    if (!e.target.classList.contains(cls.copied)) {
+      e.target.classList.remove(cls.hover);
+    }
+  });
+});
   </script>
 </body>
 
